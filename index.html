@@ -1704,10 +1704,32 @@
 </style>
 <style>
 
-  </style>
+  <style>
+  /* Intro: full-screen typewriter opening, CSS-only so it never traps content if scripts are stripped */
+  .intro{position:fixed;inset:0;z-index:9999;background:#142a3d;color:#ffffff;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;animation-name:intro-out;animation-duration:.7s;animation-timing-function:ease;animation-delay:4.8s;animation-fill-mode:forwards}
+  .intro-inner{max-width:92vw}
+  .intro-title{margin:0;font-size:clamp(2rem,7vw,3.8rem);font-weight:800;line-height:1.15;white-space:nowrap;overflow:hidden;width:0;border-right:3px solid #8fc3dc;animation-name:intro-type,intro-caret;animation-duration:1.9s,.7s;animation-timing-function:steps(19,end),step-end;animation-delay:.3s,.3s;animation-fill-mode:forwards,none;animation-iteration-count:1,infinite}
+  .intro-sub{margin:14px 0 0;font-size:clamp(1rem,3.5vw,1.4rem);color:#8fc3dc;white-space:nowrap;overflow:hidden;width:0;opacity:0;border-right:2px solid #8fc3dc;animation-name:intro-type-sub,intro-caret,intro-show;animation-duration:1.5s,.7s,.1s;animation-timing-function:steps(23,end),step-end,linear;animation-delay:2.4s,2.4s,2.4s;animation-fill-mode:forwards,infinite,forwards;animation-iteration-count:1,infinite,1}
+  .intro-skip{margin-top:28px;background:transparent;border:1px solid #8fc3dc;color:#8fc3dc;padding:8px 16px;border-radius:999px;cursor:pointer;font-size:14px;opacity:0;animation-name:intro-show;animation-duration:.3s;animation-delay:.6s;animation-fill-mode:forwards}
+  @keyframes intro-type{from{width:0}to{width:21ch}}
+  @keyframes intro-type-sub{from{width:0}to{width:25ch}}
+  @keyframes intro-caret{0%,100%{border-right-color:#8fc3dc}50%{border-right-color:transparent}}
+  @keyframes intro-show{from{opacity:0}to{opacity:1}}
+  @keyframes intro-out{to{opacity:0;visibility:hidden;pointer-events:none}}
+  @media (prefers-reduced-motion:reduce){.intro{display:none}}
+  @media print{.intro{display:none}}
+</style>
 </head>
 
 <body id="top">
+
+  <div class="intro" id="intro">
+    <div class="intro-inner">
+      <p class="intro-title">Kevin Duy Portfolio</p>
+      <p class="intro-sub">yes I made this with AI</p>
+      <button class="intro-skip" type="button" id="intro-skip">Skip intro</button>
+    </div>
+  </div>
 
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -2634,6 +2656,10 @@
   .v4-attic-drawer{box-shadow:0 14px 30px rgba(20,42,61,.12) !important}
   .v4-attic-foot a{color:#236b91 !important}
 </style>
+
+<script>
+(function(){var intro=document.getElementById('intro');if(!intro)return;function dismiss(){if(intro.parentNode)intro.parentNode.removeChild(intro)}var skip=document.getElementById('intro-skip');if(skip)skip.addEventListener('click',dismiss);intro.addEventListener('animationend',function(e){if(e.animationName==='intro-out')dismiss()});setTimeout(function(){if(document.body.contains(intro))dismiss()},6500);})();
+</script>
 
 </body>
 </html>
