@@ -27,9 +27,10 @@
       text-align: center;
       padding: 24px;
     }
-    .intro-inner { max-width: 92vw; }
+    .intro-inner { width: 100%; max-width: 92vw; }
     .intro-title {
-      margin: 0;
+      margin: 0 auto;
+      text-align: left;
       font-size: clamp(2rem, 7vw, 3.8rem);
       font-weight: 800;
       line-height: 1.15;
@@ -45,7 +46,8 @@
       animation-iteration-count: 1, infinite;
     }
     .intro-sub {
-      margin: 14px 0 0;
+      margin: 14px auto 0;
+      text-align: left;
       font-size: clamp(1rem, 3.5vw, 1.4rem);
       color: #8fc3dc;
       white-space: nowrap;
@@ -83,7 +85,7 @@
     @keyframes intro-caret { 0%, 100% { border-right-color: #8fc3dc; } 50% { border-right-color: transparent; } }
     @keyframes intro-show { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
-      .intro-title, .intro-sub { animation: none; width: auto; opacity: 1; border-right: 0; white-space: normal; }
+      .intro-title, .intro-sub { animation: none; width: auto; opacity: 1; border-right: 0; white-space: normal; text-align: center; }
       .intro-enter { animation: none; opacity: 1; }
     }
   </style>
