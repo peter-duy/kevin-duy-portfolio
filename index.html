@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="6; url=portfolio.html" />
   <title>Kevin Duy's Portfolio</title>
   <meta name="description" content="Kevin Duy — Tampa, Florida. Data Scientist, Data Engineer, and Analytics Engineer with an active TS/SCI clearance, experience building data applications, pipelines, analytics, and operational tools." />
   <meta property="og:title" content="Kevin Duy | Data Science, Engineering & Analytics" />
@@ -58,7 +57,7 @@
       animation-duration: 1.5s, .7s, .1s;
       animation-timing-function: steps(25, end), step-end, linear;
       animation-delay: 2.4s, 2.4s, 2.4s;
-      animation-fill-mode: forwards, infinite, forwards;
+      animation-fill-mode: forwards, none, forwards;
       animation-iteration-count: 1, infinite, 1;
     }
     .intro-enter {
@@ -72,11 +71,11 @@
       font-size: 15px;
       text-decoration: none;
       cursor: pointer;
-      opacity: 0;
+      opacity: 1;
       animation-name: intro-show;
       animation-duration: .3s;
       animation-delay: 4.2s;
-      animation-fill-mode: forwards;
+      animation-fill-mode: both;
     }
     .intro-enter:hover { background: #203d55; color: #ffffff; }
     @keyframes intro-type { from { width: 0; } to { width: 23ch; } }
@@ -95,8 +94,5 @@
     <p class="intro-sub">Yes - I made this with AI</p>
     <a class="intro-enter" href="portfolio.html">Enter portfolio &rarr;</a>
   </div>
-  <script>
-    setTimeout(function () { window.location.href = 'portfolio.html'; }, 5500);
-  </script>
 </body>
 </html>
