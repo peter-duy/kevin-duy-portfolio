@@ -33,41 +33,34 @@
       text-align: center;
       padding: 24px;
     }
-    .intro-inner { width: 100%; max-width: 92vw; }
+    .intro-inner { width: 100%; max-width: 92vw; text-align: center; }
     .intro-title {
       margin: 0 auto;
-      text-align: left;
-      font-size: clamp(2rem, 7vw, 3.8rem);
+      text-align: center;
+      font-size: clamp(1.9rem, 8.5vw, 3.8rem);
       font-weight: 800;
       line-height: 1.15;
       white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      border-right: 3px solid #8fc3dc;
-      animation-name: intro-type, intro-caret;
-      animation-duration: 1.9s, .7s;
-      animation-timing-function: steps(21, end), step-end;
-      animation-delay: .3s, .3s;
-      animation-fill-mode: forwards, none;
-      animation-iteration-count: 1, infinite;
+      min-height: 1.15em;
     }
     .intro-sub {
       margin: 14px auto 0;
-      text-align: left;
-      font-size: clamp(1rem, 3.5vw, 1.4rem);
+      text-align: center;
+      font-size: clamp(1rem, 4vw, 1.4rem);
       color: #8fc3dc;
       white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      opacity: 0;
-      border-right: 2px solid #8fc3dc;
-      animation-name: intro-type-sub, intro-caret, intro-show;
-      animation-duration: 1.5s, .7s, .1s;
-      animation-timing-function: steps(25, end), step-end, linear;
-      animation-delay: 2.4s, 2.4s, 2.4s;
-      animation-fill-mode: forwards, none, forwards;
-      animation-iteration-count: 1, infinite, 1;
+      min-height: 1.3em;
     }
+    .caret {
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      background: #8fc3dc;
+      margin-left: 3px;
+      vertical-align: -0.12em;
+      animation: intro-blink .7s step-end infinite;
+    }
+    @keyframes intro-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
     .intro-enter {
       display: inline-block;
       margin-top: 32px;
@@ -79,28 +72,65 @@
       font-size: 15px;
       text-decoration: none;
       cursor: pointer;
-      opacity: 1;
-      animation-name: intro-show;
-      animation-duration: .3s;
-      animation-delay: 4.2s;
-      animation-fill-mode: both;
+      opacity: 0;
+      transition: opacity .3s;
     }
+    .intro-enter.show { opacity: 1; }
     .intro-enter:hover { background: #203d55; color: #ffffff; }
-    @keyframes intro-type { from { width: 0; } to { width: 23ch; } }
-    @keyframes intro-type-sub { from { width: 0; } to { width: 27ch; } }
-    @keyframes intro-caret { 0%, 100% { border-right-color: #8fc3dc; } 50% { border-right-color: transparent; } }
-    @keyframes intro-show { from { opacity: 0; } to { opacity: 1; } }
     @media (prefers-reduced-motion: reduce) {
-      .intro-title, .intro-sub { animation: none; width: auto; opacity: 1; border-right: 0; white-space: normal; text-align: center; }
-      .intro-enter { animation: none; opacity: 1; }
+      .caret { display: none; }
+      .intro-enter { opacity: 1; transition: none; }
     }
   </style>
 </head>
 <body>
   <div class="intro-inner">
-    <p class="intro-title">Kevin Duy's Portfolio</p>
-    <p class="intro-sub">Yes - I made this with AI</p>
-    <a class="intro-enter" href="portfolio.html">Enter portfolio &rarr;</a>
+    <p class="intro-title"><span id="intro-title-text"></span><span class="caret" id="intro-title-caret"></span></p>
+    <p class="intro-sub"><span id="intro-sub-text"></span><span class="caret" id="intro-sub-caret" style="display:none"></span></p>
+    <a class="intro-enter" id="intro-enter" href="portfolio.html">Enter portfolio &rarr;</a>
   </div>
+  <script>
+    (function () {
+      var title = "Kevin Duy's Portfolio";
+      var sub = "Yes - I made this with AI";
+      var titleEl = document.getElementById('intro-title-text');
+      var subEl = document.getElementById('intro-sub-text');
+      var titleCaret = document.getElementById('intro-title-caret');
+      var subCaret = document.getElementById('intro-sub-caret');
+      var enter = document.getElementById('intro-enter');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        titleEl.textContent = title;
+        subEl.textContent = sub;
+        titleCaret.style.display = 'none';
+        subCaret.style.display = 'none';
+        enter.classList.add('show');
+        return;
+      }
+      function type(el, text, speed, done) {
+        var i = 0;
+        (function step() {
+          if (i <= text.length) {
+            el.textContent = text.slice(0, i);
+            i++;
+            setTimeout(step, speed);
+          } else if (done) {
+            done();
+          }
+        })();
+      }
+      setTimeout(function () {
+        type(titleEl, title, 90, function () {
+          titleCaret.style.display = 'none';
+          subCaret.style.display = 'inline-block';
+          setTimeout(function () {
+            type(subEl, sub, 60, function () {
+              subCaret.style.display = 'none';
+              enter.classList.add('show');
+            });
+          }, 300);
+        });
+      }, 300);
+    })();
+  </script>
 </body>
 </html>
